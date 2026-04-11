@@ -1,0 +1,6 @@
+# Mi archivo .env
+
+# Cosas que no se deben ver
+.idea
+.venv
+app/secrets/.env
