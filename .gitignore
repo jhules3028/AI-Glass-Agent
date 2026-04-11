@@ -4,3 +4,9 @@
 .idea
 .venv
 app/secrets/.env
+
+# Chats con la IA
+app/storage/chats/*
+
+# Base de datos de pruebas
+app/bd/base_datos.db

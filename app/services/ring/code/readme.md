@@ -1,0 +1,1 @@
+Aqui vendra el codigo del anillo, en realidad es una simple peticion http a un servicio qiue tiene que estar escuchando por un puerto (ejemplo 80001)
