@@ -1,0 +1,15 @@
+# Manejo de archivos env en python
+python-dotenv
+
+# Librerias para los lentes
+frame-sdk
+frame-ble
+
+
+# Librerias asociadas al agente de IA
+langchain
+langchain-openai
+langgraph
+
+fastapi
+uvicorn[standard]
