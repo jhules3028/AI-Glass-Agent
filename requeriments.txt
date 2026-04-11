@@ -5,6 +5,8 @@ python-dotenv
 frame-sdk
 frame-ble
 
+# Manejo de imagenes, necesario para la captura de imagenes en los lentes
+Pillow
 
 # Librerias asociadas al agente de IA
 langchain
