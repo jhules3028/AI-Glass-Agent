@@ -21,7 +21,7 @@
 from frame_sdk.camera import  Quality
 # Estado
 
-NOMBRE_LENTES = "frame-glasses" # Poner una lista/diccionarios de diferentes nombres
+NOMBRE_LENTES = ["frame","frame-glasses"] # Poner una lista/diccionarios de diferentes nombres: La idea es que se pueda considerar una lisra de posibles nombres para los mismos.
 
 # Foto
 
