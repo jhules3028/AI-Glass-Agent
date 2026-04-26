@@ -46,6 +46,6 @@ TIMES_TO_SHOW=3
 
 # Avanzado 🔨
 
-FUNCTION_COLA=True         # Permite enconlar funciones; Puedes dejar en la cola multiples funciones para que cuando se acabe de ejecutar una despues se ejecute otra.
+BATCH_FUNCTIONS=True         # Permite enconlar funciones; Puedes dejar en la cola multiples funciones para que cuando se acabe de ejecutar una despues se ejecute otra.
                            # Ejemplo: 1. Tomar fotos 2. Mostrar texto, 3. Consultar el porcentaje de bateria de las gafas, etc...
 
