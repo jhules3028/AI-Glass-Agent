@@ -18,6 +18,9 @@
 
 # 3. Texto
 
+
+# Avanzado
+
 from frame_sdk.camera import  Quality
 # Estado
 
@@ -40,4 +43,9 @@ LINES_CAN_BE_SHOWED=5       # Con esto le especificamos al programa cuantas line
 SHOW_DINAMYCALLY=True       # A veces cuando se muestre mucho texto será necesario partirlo para que sea mas facil de msotrar; si esta activado partira el texto en fragmentos. IDEAL PARA MOSTRAR GRANDES CANTIDADES DE TEXTO
 REPEAT_SHOW_TEXT=True
 TIMES_TO_SHOW=3
+
+# Avanzado 🔨
+
+FUNCTION_COLA=True         # Permite enconlar funciones; Puedes dejar en la cola multiples funciones para que cuando se acabe de ejecutar una despues se ejecute otra.
+                           # Ejemplo: 1. Tomar fotos 2. Mostrar texto, 3. Consultar el porcentaje de bateria de las gafas, etc...
 
