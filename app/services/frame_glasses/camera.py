@@ -24,7 +24,7 @@ from frame_sdk.camera import Quality
 from app.services.frame_glasses.config import RUTA_GUARDADO_IMAGENES,AUTOFOCUS_SECONDS,QUALITY_PHOTO,NUMBER_FOTOS,TIME_BETWEEN_PHOTOS, RETRY_TAKE_PHOTOS #,NUMBER_RETRYS
 from app.services.frame_glasses.log_manager import log_event
 
-async def save_photo(
+async def Save_photo(
         ruta_guardado_imagenes :str = RUTA_GUARDADO_IMAGENES,
         calidad_imagen = QUALITY_PHOTO,
         segundos_autofoco: int  = AUTOFOCUS_SECONDS
@@ -62,7 +62,7 @@ async def save_photo(
 
         return True
 
-async def take_multiple_photos(
+async def Take_multiple_photos(
         RUTA_GUARDADO_IMAGENES, #
         AUTOFOCUS_SECONDS: int= AUTOFOCUS_SECONDS,
         QUALITY_PHOTO: Quality = QUALITY_PHOTO,
@@ -87,7 +87,7 @@ async def take_multiple_photos(
                 show_time=True
             )
 
-            resultado=frame.camera.save_photo(RUTA_GUARDADO_IMAGENES, calidad_imagen = QUALITY_PHOTO,segundos_autofoco  = AUTOFOCUS_SECONDS)
+            resultado= await Save_photo(RUTA_GUARDADO_IMAGENES, calidad_imagen = QUALITY_PHOTO,segundos_autofoco  = AUTOFOCUS_SECONDS)
             time.sleep(TIME_BETWEEN_PHOTOS)
 
             # vamos a llevar un conteno de cuantas fotos se tomaron y cuantas no para presentar un informe.
@@ -120,12 +120,12 @@ async def take_multiple_photos(
             # Volvemos a ejecutar la funcion si esta habilitado el reintento y lo deshabilitamos para que no se haga un loop infinito
             # Mandamos unicamente el numero de fotos fallidas para que no se intenten capturar todas las fotos.
 
-            await take_multiple_photos(
+            await Take_multiple_photos(
             RUTA_GUARDADO_IMAGENES,
             AUTOFOCUS_SECONDS,
             QUALITY_PHOTO,
             numero_fotos_fallidas,
             TIME_BETWEEN_PHOTOS,
-            False# NUMBER_RETRYS:int= NUMBER_RETRYS
+            False # NUMBER_RETRYS:int= NUMBER_RETRYS
             )
 
