@@ -10,3 +10,4 @@ app/storage/chats/*
 
 # Base de datos de pruebas
 app/bd/base_datos.db
+pruebas
