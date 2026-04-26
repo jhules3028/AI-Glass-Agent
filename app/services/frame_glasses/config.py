@@ -32,5 +32,12 @@ NUMBER_FOTOS=5
 TIME_BETWEEN_PHOTOS=5
 RETRY_TAKE_PHOTOS=True      # Permite que cuando se quieran tomar muchas fotos; si algunas fallan se pueda reintentar de manera automatica
 #NUMBER_RETRYS=1            # Tal vez agregar mas de uno ya seria demasiado; de momento descartado.
+
+
 # Texto
+
+LINES_CAN_BE_SHOWED=5       # Con esto le especificamos al programa cuantas lineas pueden ser mostradas por los lentes
+SHOW_DINAMYCALLY=True       # A veces cuando se muestre mucho texto será necesario partirlo para que sea mas facil de msotrar; si esta activado partira el texto en fragmentos. IDEAL PARA MOSTRAR GRANDES CANTIDADES DE TEXTO
+REPEAT_SHOW_TEXT=True
+TIMES_TO_SHOW=3
 
