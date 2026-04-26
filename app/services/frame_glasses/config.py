@@ -30,7 +30,7 @@ AUTOFOCUS_SECONDS=3
 QUALITY_PHOTO=Quality.HIGH
 NUMBER_FOTOS=5
 TIME_BETWEEN_PHOTOS=5
-RETRY_TAKE_PHOTO=True
-NUMBER_RETRYS=1
+RETRY_TAKE_PHOTOS=True      # Permite que cuando se quieran tomar muchas fotos; si algunas fallan se pueda reintentar de manera automatica
+#NUMBER_RETRYS=1            # Tal vez agregar mas de uno ya seria demasiado; de momento descartado.
 # Texto
 

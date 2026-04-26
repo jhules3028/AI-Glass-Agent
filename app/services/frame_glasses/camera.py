@@ -1,6 +1,12 @@
 # Repositorio que sirvio de apoyo para el desarrollo de esta seccion: https://github.com/CitizenOneX/frame_examples_python/blob/main/frame_msg/manual_exposure.py
 # En este apartado podras ver la parte del servicio asociado a como toamr fotos con los lentes, asi como la ruta en la cual se guardan las fotos
 
+# Funciones de esta pagina:
+
+# 1. save_photo:            Esta funcion lo unico que hace es tratar de tomar una foto con las configuraciones del archivo: config.py; Captura logs de todo el procedimiento
+# 2. take_multiple_photos:  Toma multiples fotos usando la función save_photo.
+
+
 
 # Librerias necesarias para el funcionamiento del programa.
 import asyncio
@@ -15,7 +21,7 @@ from frame_sdk.camera import Quality
 
 # Configuraciones y funciones requeridas para el programa.
 
-from app.services.frame_glasses.config import RUTA_GUARDADO_IMAGENES,AUTOFOCUS_SECONDS,QUALITY_PHOTO,NUMBER_FOTOS,TIME_BETWEEN_PHOTOS
+from app.services.frame_glasses.config import RUTA_GUARDADO_IMAGENES,AUTOFOCUS_SECONDS,QUALITY_PHOTO,NUMBER_FOTOS,TIME_BETWEEN_PHOTOS, RETRY_TAKE_PHOTOS #,NUMBER_RETRYS
 from app.services.frame_glasses.log_manager import log_event
 
 async def save_photo(
@@ -58,19 +64,68 @@ async def save_photo(
 
 async def take_multiple_photos(
         RUTA_GUARDADO_IMAGENES, #
-        autofocus_seconds: int,
-        quality: Quality = Quality.HIGH
-    ):
-
-    #  filename=RUTA_GUARDADO_IMAGENES
-
-    """
+        AUTOFOCUS_SECONDS: int= AUTOFOCUS_SECONDS,
+        QUALITY_PHOTO: Quality = QUALITY_PHOTO,
+        NUMBER_FOTOS : int= NUMBER_FOTOS,
+        TIME_BETWEEN_PHOTOS : int= TIME_BETWEEN_PHOTOS,
+        RETRY_TAKE_PHOTOS: bool =RETRY_TAKE_PHOTOS,
+        #NUMBER_RETRYS:int= NUMBER_RETRYS
+         ):
+    """d
     Toma multiples fotos con las gafas, adpatandose a las configuracioens solicitadas por el usuario
     :return: Boolean y el path
     """
-
+    numero_fotos_exitosas=0
+    numero_fotos_fallidas=0
     async with Frame() as frame:
-        frame.camera.save_photo(RUTA_GUARDADO_IMAGENES, quality=Quality.HIGH)
+        for numero_foto_actual in range(NUMBER_FOTOS):
+            log_event(
+                title=f"Se tratará de tomar la foto: {numero_foto_actual}",
+                description=f"",
+                type="Photo",
+                important=True,
+                show_time=True
+            )
 
+            resultado=frame.camera.save_photo(RUTA_GUARDADO_IMAGENES, calidad_imagen = QUALITY_PHOTO,segundos_autofoco  = AUTOFOCUS_SECONDS)
+            time.sleep(TIME_BETWEEN_PHOTOS)
 
-        time.sleep(1)
+            # vamos a llevar un conteno de cuantas fotos se tomaron y cuantas no para presentar un informe.
+            # En caso de que el usuario tenga el valor de RETRY_TAKE_PHOTOS = True vamos a reintentar tomar las fotos que fallaron.
+
+            # Nota importante: Antes de ahcer el reintento valdría la pena consultar si las gafas estan conectadas.
+
+            if resultado:
+                numero_fotos_exitosas+=1
+
+            else:
+                numero_fotos_fallidas+=1
+
+        texto_mostrar = "Dado que no han tomado todas las fotos de manera correcta no se realizarán reintentos."   # Definimos el texto base que mostraremos en un caso optimo.
+
+        if numero_fotos_fallidas>=1:
+            texto_mostrar=f"No se han podido tomar {numero_fotos_fallidas} fotos."
+
+            if RETRY_TAKE_PHOTOS:
+                texto_mostrar+=" Se reintentará tomar las fotos fallidas de manera inmediata."
+
+        log_event(
+                title=f"Se han tomado {numero_fotos_exitosas} de manera correcta",
+                description=texto_mostrar,
+                type="Photo",
+                important=True,
+                show_time=True
+        )
+        if RETRY_TAKE_PHOTOS:
+            # Volvemos a ejecutar la funcion si esta habilitado el reintento y lo deshabilitamos para que no se haga un loop infinito
+            # Mandamos unicamente el numero de fotos fallidas para que no se intenten capturar todas las fotos.
+
+            await take_multiple_photos(
+            RUTA_GUARDADO_IMAGENES,
+            AUTOFOCUS_SECONDS,
+            QUALITY_PHOTO,
+            numero_fotos_fallidas,
+            TIME_BETWEEN_PHOTOS,
+            False# NUMBER_RETRYS:int= NUMBER_RETRYS
+            )
+
